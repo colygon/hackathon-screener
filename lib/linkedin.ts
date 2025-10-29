@@ -113,19 +113,41 @@ export class LinkedInScraper {
         };
       }
       
-      // Extract current position
+      // Extract current position and company
       let jobTitle = null;
       let company = null;
       
+      // Try current_company first (most reliable)
       if (profile.current_company) {
-        jobTitle = profile.current_company.title;
-        company = profile.current_company.name;
-      } else if (profile.experience && profile.experience.length > 0) {
+        jobTitle = profile.current_company.title || jobTitle;
+        company = profile.current_company.name || company;
+      }
+      
+      // Try experiences array
+      if (profile.experience && profile.experience.length > 0) {
         const currentJob = profile.experience[0];
-        jobTitle = currentJob.title;
-        company = currentJob.company;
-      } else if (profile.position) {
+        if (!jobTitle) jobTitle = currentJob.title;
+        if (!company) company = currentJob.company || currentJob.company_name;
+      }
+      
+      // Try top-level position field
+      if (!jobTitle && profile.position) {
         jobTitle = profile.position;
+        
+        // Try to extract company from position string if it contains 'at'
+        // e.g., "Software Engineer at Google"
+        const atMatch = profile.position.match(/at\s+([^|]+)/i);
+        if (atMatch && !company) {
+          company = atMatch[1].trim();
+        }
+      }
+      
+      // Try headline as last resort for company
+      if (!company && profile.headline) {
+        const atMatch = profile.headline.match(/at\s+([^|]+)/i);
+        if (atMatch) {
+          company = atMatch[1].trim();
+        }
       }
       
       // Extract graduation year (most recent education end year)
