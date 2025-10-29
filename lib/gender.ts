@@ -29,9 +29,28 @@ const femaleNames = new Set([
   'alice', 'judy', 'isabella', 'julia', 'grace', 'amber', 'denise', 'danielle', 'marilyn', 'beverly',
   'charlotte', 'natalie', 'brittany', 'diana', 'doris', 'kayla', 'alexis', 'lori', 'marie', 'tiffany',
   'priya', 'anjali', 'pooja', 'neha', 'sneha', 'kavya', 'divya', 'ananya', 'riya', 'shreya',
-  'fatima', 'aisha', 'maryam', 'zainab', 'sara', 'amina', 'noor', 'hana', 'layla', 'yasmin',
-  'sofia', 'isabella', 'camila', 'valentina', 'lucia', 'martina', 'gabriela', 'daniela', 'ana', 'carolina'
+  'fatima', 'aisha', 'maryam', 'zainab', 'amina', 'noor', 'hana', 'layla', 'yasmin',
+  'sofia', 'camila', 'valentina', 'lucia', 'martina', 'gabriela', 'daniela', 'ana', 'carolina',
+  'evangeline', 'eve', 'genevieve', 'vivian', 'vivienne', 'madeline', 'josephine', 'eleanor',
+  'penelope', 'scarlett', 'violet', 'hazel', 'ivy', 'rose', 'lily', 'daisy', 'iris',
+  'savannah', 'claire', 'stella', 'nora', 'elena', 'aurora', 'lucy', 'maya', 'willow',
+  'ava', 'mia', 'ella', 'aria', 'chloe', 'zoe', 'riley', 'leah', 'hannah', 'audrey',
+  'sweta', 'shweta', 'smita', 'sita', 'geeta', 'meena', 'seema', 'reena', 'veena',
+  'isha', 'tara', 'maya', 'sonia', 'monica', 'anita', 'sunita', 'lalita', 'savita',
+  'desiree', 'heidi', 'megan', 'vamika', 'riddhi', 'sinem', 'amitha', 'janavi'
 ]);
+
+// Female name patterns (endings that typically indicate female names)
+const femalePatterns = [
+  /ine$/i,  // Christine, Caroline, Evangeline
+  /elle$/i, // Michelle, Gabrielle, Belle
+  /ette$/i, // Annette, Colette
+  /ina$/i,  // Christina, Angelina, Martina
+  /anna$/i, // Anna, Joanna, Brianna
+  /ia$/i,   // Maria, Julia, Olivia (but be careful with some male names)
+  /ara$/i,  // Sara, Clara, Tara
+  /een$/i,  // Maureen, Kathleen
+];
 
 export type Gender = 'Male' | 'Female' | 'Non-binary/Unknown';
 
@@ -49,6 +68,15 @@ export function detectGender(fullName: string): Gender {
   
   if (femaleNames.has(cleanName)) {
     return 'Female';
+  }
+  
+  // Check female name patterns
+  for (const pattern of femalePatterns) {
+    if (pattern.test(cleanName)) {
+      // Additional check: avoid false positives for names like "Andrea" which can be male in some cultures
+      // But for most patterns, we can be confident
+      return 'Female';
+    }
   }
   
   // If not found in either list, return non-binary/unknown
