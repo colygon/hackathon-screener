@@ -246,15 +246,6 @@ export default function ApplicantsTable({ applicants }: Props) {
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSort('graduation_year')}
-            >
-              <div className="flex items-center">
-                Grad Year
-                <SortIcon field="graduation_year" />
-              </div>
-            </th>
-            <th 
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
               onClick={() => handleSort('company')}
             >
               <div className="flex items-center">
@@ -302,9 +293,9 @@ export default function ApplicantsTable({ applicants }: Props) {
                       </span>
                       <button
                         onClick={() => handleUndo(applicant.id)}
-                        className="text-xs text-gray-600 hover:text-gray-900 underline"
+                        className="text-xs text-blue-600 hover:text-blue-800"
                       >
-                        Undo
+                        ✎
                       </button>
                     </div>
                   ) : (
@@ -374,32 +365,6 @@ export default function ApplicantsTable({ applicants }: Props) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{applicant.track || 'N/A'}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {editingField?.id === applicant.id && editingField?.field === 'graduation_year' ? (
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        value={editValues[`${applicant.id}-graduation_year`] || ''}
-                        onChange={(e) => setEditValues(prev => ({ ...prev, [`${applicant.id}-graduation_year`]: e.target.value }))}
-                        className="w-20 px-2 py-1 text-sm border border-gray-300 rounded"
-                        placeholder="Year"
-                        autoFocus
-                      />
-                      <button onClick={() => handleSaveField(applicant.id, 'graduation_year')} className="text-xs text-green-600 hover:text-green-800">✓</button>
-                      <button onClick={handleCancelEdit} className="text-xs text-red-600 hover:text-red-800">✗</button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <div className="text-sm text-gray-900">{getFieldValue(applicant, 'graduation_year') || 'N/A'}</div>
-                      <button
-                        onClick={() => handleEditField(applicant.id, 'graduation_year', applicant.graduation_year ?? '')}
-                        className="text-xs text-blue-600 hover:text-blue-800"
-                      >
-                        ✎
-                      </button>
-                    </div>
-                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {editingField?.id === applicant.id && editingField?.field === 'company' ? (
