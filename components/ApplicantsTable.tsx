@@ -228,7 +228,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {currentStatus ? (
+                  {currentStatus === 'approved' || currentStatus === 'rejected' ? (
                     <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                       currentStatus === 'approved' 
                         ? 'bg-green-100 text-green-800' 
