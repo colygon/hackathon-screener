@@ -27,6 +27,7 @@ export default function Home() {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showTable, setShowTable] = useState(false);
+  const [isScreening, setIsScreening] = useState(false);
 
   // Load existing applicants on mount
   useEffect(() => {
@@ -64,6 +65,10 @@ export default function Home() {
     formData.append('file', file);
 
     try {
+      // Close modal and show screening status
+      setShowUploadModal(false);
+      setIsScreening(true);
+      
       const res = await fetch('/api/screen', {
         method: 'POST',
         body: formData,
@@ -78,6 +83,7 @@ export default function Home() {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
+      setIsScreening(false);
     }
   };
 
@@ -103,13 +109,26 @@ export default function Home() {
             </div>
           </div>
           
-          <button
-            onClick={() => setShowUploadModal(true)}
-            className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            Upload CSV
-          </button>
+          {isScreening ? (
+            <button
+              disabled
+              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-lg cursor-not-allowed"
+            >
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              Screening...
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowUploadModal(true)}
+              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Upload CSV
+            </button>
+          )}
         </div>
 
         {/* Analytics Cards */}
