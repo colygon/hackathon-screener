@@ -22,6 +22,7 @@ export interface Applicant {
   company: string;
   job_title: string;
   linkedin_scraped_at: Date;
+  gender: string;
   created_at: Date;
   updated_at: Date;
 }

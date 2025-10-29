@@ -21,6 +21,7 @@ interface Applicant {
   graduation_year?: number;
   company?: string;
   job_title?: string;
+  gender?: string;
   created_at: string;
 }
 
@@ -50,6 +51,14 @@ export default function ApplicantsTable({ applicants }: Props) {
 
   const handleReject = (id: number) => {
     setApplicantStatuses(prev => ({ ...prev, [id]: 'rejected' }));
+  };
+
+  const handleUndo = (id: number) => {
+    setApplicantStatuses(prev => {
+      const newStatuses = { ...prev };
+      delete newStatuses[id];
+      return newStatuses;
+    });
   };
 
   const sortedApplicants = [...applicants].sort((a, b) => {
@@ -153,6 +162,9 @@ export default function ApplicantsTable({ applicants }: Props) {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Title
             </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Gender
+            </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
               onClick={() => handleSort('email')}
@@ -171,13 +183,21 @@ export default function ApplicantsTable({ applicants }: Props) {
               <tr key={applicant.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   {currentStatus === 'approved' || currentStatus === 'rejected' ? (
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                      currentStatus === 'approved' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {currentStatus === 'approved' ? 'Approved' : 'Rejected'}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                        currentStatus === 'approved' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {currentStatus === 'approved' ? 'Approved' : 'Rejected'}
+                      </span>
+                      <button
+                        onClick={() => handleUndo(applicant.id)}
+                        className="text-xs text-gray-600 hover:text-gray-900 underline"
+                      >
+                        Undo
+                      </button>
+                    </div>
                   ) : (
                     <div className="flex gap-2">
                       <button
@@ -254,6 +274,9 @@ export default function ApplicantsTable({ applicants }: Props) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{applicant.job_title || 'N/A'}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{applicant.gender || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">{applicant.email}</div>
