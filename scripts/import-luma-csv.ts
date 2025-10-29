@@ -24,7 +24,7 @@ async function importLumaCsv() {
   let imported = 0;
   let skipped = 0;
 
-  for (const record of records) {
+  for (const record of records as any[]) {
     // Only import approved or pending_approval records with GitHub usernames
     const approvalStatus = record.approval_status;
     const githubResponse = record['What is your GitHub?'];
