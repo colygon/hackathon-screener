@@ -8,7 +8,7 @@ async function displayApplicants() {
   try {
     const result = await getAllApplicants();
     
-    if (!result.success) {
+    if (!result.success || !result.data) {
       console.error('Failed to fetch applicants:', result.error);
       process.exit(1);
     }
