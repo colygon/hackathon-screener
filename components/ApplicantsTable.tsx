@@ -39,6 +39,7 @@ export default function ApplicantsTable({ applicants }: Props) {
   const [applicantGenders, setApplicantGenders] = useState<Record<number, string>>({});
   const [editingField, setEditingField] = useState<{ id: number; field: string } | null>(null);
   const [editValues, setEditValues] = useState<Record<string, string>>({});
+  const [editingGender, setEditingGender] = useState<number | null>(null);
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -66,6 +67,11 @@ export default function ApplicantsTable({ applicants }: Props) {
 
   const handleSetGender = (id: number, gender: string) => {
     setApplicantGenders(prev => ({ ...prev, [id]: gender }));
+    setEditingGender(null);
+  };
+
+  const handleEditGender = (id: number) => {
+    setEditingGender(id);
   };
 
   const handleEditField = (id: number, field: string, currentValue: string) => {
@@ -414,8 +420,38 @@ export default function ApplicantsTable({ applicants }: Props) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   {(() => {
                     const currentGender = applicantGenders[applicant.id] || applicant.gender;
+                    
+                    if (editingGender === applicant.id) {
+                      return (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleSetGender(applicant.id, 'Male')}
+                            className="px-2 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+                          >
+                            M
+                          </button>
+                          <button
+                            onClick={() => handleSetGender(applicant.id, 'Female')}
+                            className="px-2 py-1 text-xs font-medium text-white bg-pink-600 rounded hover:bg-pink-700 transition-colors"
+                          >
+                            F
+                          </button>
+                        </div>
+                      );
+                    }
+                    
                     if (currentGender === 'Male' || currentGender === 'Female') {
-                      return <div className="text-sm text-gray-900">{currentGender}</div>;
+                      return (
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm text-gray-900">{currentGender}</div>
+                          <button
+                            onClick={() => handleEditGender(applicant.id)}
+                            className="text-xs text-blue-600 hover:text-blue-800"
+                          >
+                            ✎
+                          </button>
+                        </div>
+                      );
                     } else {
                       return (
                         <div className="flex gap-2">
