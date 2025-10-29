@@ -47,7 +47,7 @@ async function screenApplicants() {
           forked_repos: screeningResult.forked_repos || 0,
           recent_contributions: screeningResult.recent_contributions || 0,
           screening_status: 'completed',
-          screening_error: null,
+          screening_error: undefined,
         });
         
         completed++;
