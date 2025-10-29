@@ -18,6 +18,10 @@ export interface Applicant {
   recent_contributions: number;
   screening_status: 'pending' | 'completed' | 'failed';
   screening_error: string;
+  graduation_year: number;
+  company: string;
+  job_title: string;
+  linkedin_scraped_at: Date;
   created_at: Date;
   updated_at: Date;
 }
@@ -126,6 +130,32 @@ export async function updateApplicantScreening(
     return { success: true, data: result.rows[0] };
   } catch (error) {
     console.error('Update screening error:', error);
+    return { success: false, error };
+  }
+}
+
+export async function updateApplicantLinkedIn(
+  apiId: string,
+  linkedinData: {
+    graduation_year: number | null;
+    company: string | null;
+    job_title: string | null;
+  }
+) {
+  try {
+    const result = await sql`
+      UPDATE applicants SET
+        graduation_year = ${linkedinData.graduation_year},
+        company = ${linkedinData.company},
+        job_title = ${linkedinData.job_title},
+        linkedin_scraped_at = CURRENT_TIMESTAMP,
+        updated_at = CURRENT_TIMESTAMP
+      WHERE api_id = ${apiId}
+      RETURNING *
+    `;
+    return { success: true, data: result.rows[0] };
+  } catch (error) {
+    console.error('Update LinkedIn error:', error);
     return { success: false, error };
   }
 }

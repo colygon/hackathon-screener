@@ -18,6 +18,9 @@ interface Applicant {
   screening_status: 'pending' | 'completed' | 'failed';
   has_opensource_contributions: boolean;
   approval_status?: string;
+  graduation_year?: number;
+  company?: string;
+  job_title?: string;
   created_at: string;
 }
 
@@ -141,6 +144,15 @@ export default function ApplicantsTable({ applicants }: Props) {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Track
             </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Grad Year
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Company
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Title
+            </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
               onClick={() => handleSort('email')}
@@ -233,6 +245,15 @@ export default function ApplicantsTable({ applicants }: Props) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{applicant.track || 'N/A'}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{applicant.graduation_year || 'N/A'}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{applicant.company || 'N/A'}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{applicant.job_title || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">{applicant.email}</div>
