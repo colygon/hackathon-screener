@@ -92,9 +92,18 @@ export default function ApplicantsTable({ applicants }: Props) {
     }
   };
 
-  const handleSetGender = (id: number, gender: string) => {
+  const handleSetGender = async (id: number, gender: string) => {
     setApplicantGenders(prev => ({ ...prev, [id]: gender }));
     setEditingGender(null);
+    try {
+      await fetch(`/api/applicants/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gender }),
+      });
+    } catch (error) {
+      console.error('Failed to update gender:', error);
+    }
   };
 
   const handleEditGender = (id: number) => {

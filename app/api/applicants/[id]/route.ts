@@ -8,24 +8,41 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { approval_status } = await request.json();
+    const body = await request.json();
     const id = params.id;
+    const { approval_status, gender } = body;
 
-    if (!approval_status) {
+    if (!approval_status && !gender) {
       return NextResponse.json(
-        { error: 'approval_status is required' },
+        { error: 'approval_status or gender is required' },
         { status: 400 }
       );
     }
 
-    const result = await sql`
-      UPDATE applicants
-      SET 
-        approval_status = ${approval_status},
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = ${id}
-      RETURNING *
-    `;
+    // Build dynamic update query
+    let updateFields = [];
+    let values: any[] = [];
+    
+    if (approval_status) {
+      updateFields.push('approval_status = $' + (values.length + 1));
+      values.push(approval_status);
+    }
+    
+    if (gender) {
+      updateFields.push('gender = $' + (values.length + 1));
+      values.push(gender);
+    }
+    
+    values.push(id);
+    const idParam = '$' + values.length;
+
+    const result = await sql.query(
+      `UPDATE applicants
+       SET ${updateFields.join(', ')}, updated_at = CURRENT_TIMESTAMP
+       WHERE id = ${idParam}
+       RETURNING *`,
+      values
+    );
 
     if (result.rows.length === 0) {
       return NextResponse.json(
