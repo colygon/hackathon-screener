@@ -104,20 +104,11 @@ export default function ApplicantsTable({ applicants }: Props) {
           <tr>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSort('name')}
+              onClick={() => handleSort('approval_status')}
             >
               <div className="flex items-center">
-                Name
-                <SortIcon field="name" />
-              </div>
-            </th>
-            <th 
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSort('email')}
-            >
-              <div className="flex items-center">
-                Email
-                <SortIcon field="email" />
+                Decision
+                <SortIcon field="approval_status" />
               </div>
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -148,18 +139,24 @@ export default function ApplicantsTable({ applicants }: Props) {
               </div>
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Screening
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Build Plan
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSort('approval_status')}
+              onClick={() => handleSort('name')}
             >
               <div className="flex items-center">
-                Decision
-                <SortIcon field="approval_status" />
+                Name
+                <SortIcon field="name" />
+              </div>
+            </th>
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('email')}
+            >
+              <div className="flex items-center">
+                Email
+                <SortIcon field="email" />
               </div>
             </th>
           </tr>
@@ -170,10 +167,32 @@ export default function ApplicantsTable({ applicants }: Props) {
             return (
               <tr key={applicant.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{applicant.name}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">{applicant.email}</div>
+                  {currentStatus === 'approved' || currentStatus === 'rejected' ? (
+                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                      currentStatus === 'approved' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {currentStatus === 'approved' ? 'Approved' : 'Rejected'}
+                    </span>
+                  ) : (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleApprove(applicant.id)}
+                        className="flex items-center px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700 transition-colors"
+                      >
+                        <ThumbsUp className="w-3 h-3 mr-1" />
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(applicant.id)}
+                        className="flex items-center px-3 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700 transition-colors"
+                      >
+                        <ThumbsDown className="w-3 h-3 mr-1" />
+                        Reject
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {applicant.github_username ? (
@@ -219,41 +238,16 @@ export default function ApplicantsTable({ applicants }: Props) {
                     )}
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {getStatusBadge(applicant.screening_status)}
-                </td>
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-500 max-w-xs truncate">
                     {applicant.build_plan || 'N/A'}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {currentStatus === 'approved' || currentStatus === 'rejected' ? (
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                      currentStatus === 'approved' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {currentStatus === 'approved' ? 'Approved' : 'Rejected'}
-                    </span>
-                  ) : (
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleApprove(applicant.id)}
-                        className="flex items-center px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700 transition-colors"
-                      >
-                        <ThumbsUp className="w-3 h-3 mr-1" />
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleReject(applicant.id)}
-                        className="flex items-center px-3 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700 transition-colors"
-                      >
-                        <ThumbsDown className="w-3 h-3 mr-1" />
-                        Reject
-                      </button>
-                    </div>
-                  )}
+                  <div className="text-sm font-medium text-gray-900">{applicant.name}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">{applicant.email}</div>
                 </td>
               </tr>
             );
