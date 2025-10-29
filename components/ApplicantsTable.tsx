@@ -217,7 +217,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                       rel="noopener noreferrer"
                       className="flex items-center text-sm text-indigo-600 hover:text-indigo-900"
                     >
-                      Profile
+                      {applicant.name}
                       <ExternalLink className="w-3 h-3 ml-1" />
                     </a>
                   ) : (
