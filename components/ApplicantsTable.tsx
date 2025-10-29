@@ -193,7 +193,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   {applicant.linkedin_url ? (
                     <a
-                      href={`https://linkedin.com${applicant.linkedin_url}`}
+                      href={applicant.linkedin_url.startsWith('http') ? applicant.linkedin_url : `https://linkedin.com${applicant.linkedin_url}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-sm text-indigo-600 hover:text-indigo-900"
