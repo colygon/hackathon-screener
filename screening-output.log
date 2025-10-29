@@ -1,0 +1,316 @@
+[dotenv@17.2.3] injecting env (31) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+📊 Fetching applicants from database...
+
+Found 151 applicants pending screening
+
+Starting GitHub screening...
+
+🔍 Screening: hema Abhijit (@abhiabhijit)
+  ✓ Repos: 31, Contributions: 0
+🔍 Screening: Carl Vincent Kho (@CarlKho-Minerva)
+  ✓ Repos: 115, Contributions: 99
+🔍 Screening: Max Awad ll (@maxawad)
+  ✓ Repos: 54, Contributions: 4
+🔍 Screening: Snehaal Dhruv (@smdhruve)
+  ✓ Repos: 9, Contributions: 0
+🔍 Screening: gerardo Rivera (Gera) (@gerardoriveradoesstuff)
+  ✓ Repos: 26, Contributions: 2
+🔍 Screening: Emanuel Camargo (@figsters)
+  ✗ Error: User not found
+🔍 Screening: Joe Sumpter (@bcwdesign)
+  ✓ Repos: 19, Contributions: 0
+🔍 Screening: Ajay Kumar Reddy Nelavetla (@ajay-automates)
+  ✓ Repos: 4, Contributions: 100
+🔍 Screening: Cosmas Mandikonza (@CosmasMandikonza)
+  ✓ Repos: 24, Contributions: 73
+🔍 Screening: satwik (@Satwikloka)
+  ✓ Repos: 59, Contributions: 0
+🔍 Screening: aleks bykhun (@caffeinum)
+  ✓ Repos: 185, Contributions: 85
+🔍 Screening: Andres Gomez Sarmiento (@andresgomezsar)
+  ✓ Repos: 24, Contributions: 2
+🔍 Screening: Akinkunmi Oyewole (@akinloluwami)
+  ✓ Repos: 146, Contributions: 25
+🔍 Screening: Rojan (@RojanSapkota)
+  ✓ Repos: 8, Contributions: 1
+🔍 Screening: Boss Huang (@BossHTW)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: David Anderson (@fapulito)
+  ✓ Repos: 100, Contributions: 10
+🔍 Screening: Mohamed Abdul Azeez  (@mdabdulazeez)
+  ✓ Repos: 43, Contributions: 2
+🔍 Screening: Perramant (@Jean-EmmanuelP)
+  ✓ Repos: 35, Contributions: 19
+🔍 Screening: Sylvain Bellemare (@sbellem)
+  ✓ Repos: 476, Contributions: 64
+🔍 Screening: Aryaman Gajrani (@arya-gaj)
+  ✓ Repos: 7, Contributions: 98
+🔍 Screening: Egecan Ör (@egv2)
+  ✓ Repos: 23, Contributions: 0
+🔍 Screening: Harshit Khemani (@HKTITAN)
+  ✓ Repos: 11, Contributions: 1
+🔍 Screening: Nirupam sharma (@nipulsh)
+  ✓ Repos: 10, Contributions: 0
+🔍 Screening: Joshua Jerin (@joshuajerin)
+  ✓ Repos: 22, Contributions: 2
+🔍 Screening: Eylül Arpapay (@eylularpapay)
+  ✓ Repos: 3, Contributions: 0
+🔍 Screening: Archit Sakri (@archits01)
+  ✓ Repos: 18, Contributions: 13
+🔍 Screening: Christopher Hensley (@Na)
+  ✗ Error: Invalid or missing username
+🔍 Screening: Temitope Ologunbaba (@ologunb)
+  ✓ Repos: 109, Contributions: 4
+🔍 Screening: Oleg Viatkin (@olegv101)
+  ✓ Repos: 32, Contributions: 2
+🔍 Screening: Ritik Singh (@bitsbyritik)
+  ✓ Repos: 38, Contributions: 24
+🔍 Screening: Ivan (@SkilLab-Tech)
+  ✓ Repos: 8, Contributions: 6
+🔍 Screening: Jean-Emmanuel Perramant (@Jean-EmmanuelP)
+  ✓ Repos: 35, Contributions: 19
+🔍 Screening: Livia Ellen (@liviaellen)
+  ✓ Repos: 68, Contributions: 7
+🔍 Screening: Krushna Kanta Rout (@krushnarout)
+  ✓ Repos: 102, Contributions: 90
+🔍 Screening: Roman Medvedev (@Romamo)
+  ✓ Repos: 50, Contributions: 48
+🔍 Screening: Imrich (@imrichh)
+  ✓ Repos: 8, Contributions: 0
+🔍 Screening: Aazam (@aazam-gh)
+  ✓ Repos: 171, Contributions: 91
+🔍 Screening: Parth Patel (@parthpatel00)
+  ✓ Repos: 13, Contributions: 9
+🔍 Screening: Balaji Seetharaman (@bala-ceg)
+  ✓ Repos: 26, Contributions: 1
+🔍 Screening: Sathvik Vempati (@SVstudent)
+  ✓ Repos: 14, Contributions: 6
+🔍 Screening: Gautam Nain (@Magnetar99)
+  ✓ Repos: 6, Contributions: 0
+🔍 Screening: Kertus Cramer (@cramerlab)
+  ✓ Repos: 11, Contributions: 0
+🔍 Screening: Karsten Palmer (@kbdevs)
+  ✓ Repos: 51, Contributions: 14
+🔍 Screening: Nickita Khylkouski (@nickita-khylkouski)
+  ✓ Repos: 15, Contributions: 1
+🔍 Screening: Daniel Sleiman (@itsreallydanii)
+  ✓ Repos: 18, Contributions: 3
+🔍 Screening: Steve (@Steve-Dusty)
+  ✓ Repos: 56, Contributions: 54
+🔍 Screening: Kye Gomez (@kyegomez)
+  ✓ Repos: 429, Contributions: 94
+🔍 Screening: Juan Carrillo (@juanfcarrillo)
+  ✓ Repos: 50, Contributions: 5
+🔍 Screening: Anthony Gomez (@LilT0ny)
+  ✓ Repos: 14, Contributions: 7
+🔍 Screening: Zixun Wang (@superjay0208)
+  ✓ Repos: 7, Contributions: 17
+🔍 Screening: Andrew Brandon Wong (@Alhandrew1)
+  ✓ Repos: 1, Contributions: 0
+🔍 Screening: Irwing Tello (@irwingtello)
+  ✓ Repos: 41, Contributions: 0
+🔍 Screening: Jasper Morgal (@Jasper-256)
+  ✓ Repos: 10, Contributions: 24
+🔍 Screening: Personal email Aaron Culich (@aculich)
+  ✓ Repos: 562, Contributions: 3
+🔍 Screening: Joe (@TPGLLC-US)
+  ✓ Repos: 6, Contributions: 0
+🔍 Screening: Jake Hindman (@JacobHind)
+  ✓ Repos: 2, Contributions: 0
+🔍 Screening: Anubhav Sigdel (@asigdel29)
+  ✓ Repos: 79, Contributions: 1
+🔍 Screening: Maddie D. Reese (@maddiedreese)
+  ✓ Repos: 15, Contributions: 87
+🔍 Screening: Sir Gawain (@0xsirgawain)
+  ✗ Error: User not found
+🔍 Screening: Anvay VATS (@vats98754)
+  ✓ Repos: 76, Contributions: 1
+🔍 Screening: Aryan Keluskar (@aryankeluskar)
+  ✓ Repos: 70, Contributions: 43
+🔍 Screening: Nikita Annt (@diannt)
+  ✓ Repos: 176, Contributions: 30
+🔍 Screening: Jonathan Belay (@jonbelay)
+  ✓ Repos: 7, Contributions: 0
+🔍 Screening: Thomas Maury (@tm-ai0)
+  ✓ Repos: 1, Contributions: 11
+🔍 Screening: Sofía Rocher (@sofiarocher)
+  ✓ Repos: 17, Contributions: 0
+🔍 Screening: Barathwaj Anandan (@barathwajanandan)
+  ✓ Repos: 37, Contributions: 5
+🔍 Screening: Aaditya golash (@Aaditya-Golash)
+  ✓ Repos: 6, Contributions: 10
+🔍 Screening: Ayaan (@ayaangazali)
+  ✓ Repos: 5, Contributions: 9
+🔍 Screening: Arlan Marat (@arla6ka)
+  ✓ Repos: 1, Contributions: 1
+🔍 Screening: Yeabsira Teshome (@xenn0010)
+  ✓ Repos: 26, Contributions: 26
+🔍 Screening: Karthik Uppala (@NotMe22221)
+  ✓ Repos: 3, Contributions: 0
+🔍 Screening: Micheal Adediran (@brickflows)
+  ✓ Repos: 22, Contributions: 0
+🔍 Screening: Steve Korshakov (@ex3ndr)
+  ✓ Repos: 93, Contributions: 24
+🔍 Screening: DRIX10  (@drix10)
+  ✓ Repos: 38, Contributions: 97
+🔍 Screening: Davis (@CatalanCabbage)
+  ✓ Repos: 24, Contributions: 2
+🔍 Screening: Brendan Johnston (@johnstonbrendan)
+  ✓ Repos: 22, Contributions: 0
+🔍 Screening: Avinash K (@AvinashKalivarapu)
+  ✓ Repos: 20, Contributions: 0
+🔍 Screening: Gouthami Nadupuri (@GouthamiN25)
+  ✓ Repos: 19, Contributions: 77
+🔍 Screening: Heath Sun (@HeathSun)
+  ✓ Repos: 50, Contributions: 20
+🔍 Screening: Kaelan Yim (@vitamoon)
+  ✓ Repos: 13, Contributions: 0
+🔍 Screening: Kevin Tucker (@kevintucker)
+  ✓ Repos: 2, Contributions: 1
+🔍 Screening: Ronald Li (@RonCodes88)
+  ✓ Repos: 31, Contributions: 99
+🔍 Screening: Andres Niño (@AndresNinou)
+  ✓ Repos: 17, Contributions: 31
+🔍 Screening: Ryuto Kawabata (@05ryt31)
+  ✓ Repos: 24, Contributions: 98
+🔍 Screening: Dhananjay Surti (@djsurt)
+  ✓ Repos: 27, Contributions: 12
+🔍 Screening: Bradley Haraguchi (@stanchpillow55)
+  ✓ Repos: 10, Contributions: 50
+🔍 Screening: Vishwesh Krishna (@vichcraft)
+  ✓ Repos: 11, Contributions: 14
+🔍 Screening: Dhruvkumar Patel (@pateldhruv1672)
+  ✓ Repos: 23, Contributions: 19
+🔍 Screening: Mansi More (@MansiMore99)
+  ✓ Repos: 44, Contributions: 7
+🔍 Screening: Akshita Singh (@akshitasingh07)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: Ambarish Govindarajulu Kaliamurthi (@ambarishgk)
+  ✓ Repos: 47, Contributions: 8
+🔍 Screening: Joey Li (@adsfadf)
+  ✗ Error: User not found
+🔍 Screening: Nihal (@nihalnihalani)
+  ✓ Repos: 60, Contributions: 89
+🔍 Screening: Ethan Parker (@nianhua99)
+  ✓ Repos: 23, Contributions: 0
+🔍 Screening: Abdelrhman Slim (@abdelrhmanX7)
+  ✓ Repos: 54, Contributions: 15
+🔍 Screening: Aneesh Kumar (@aneesh6214)
+  ✓ Repos: 21, Contributions: 21
+🔍 Screening: Daniel Kim (@Yatsz)
+  ✓ Repos: 18, Contributions: 18
+🔍 Screening: Aaron Sharif (@Sharif262)
+  ✓ Repos: 19, Contributions: 13
+🔍 Screening: Jinhyung Kim (@Jin2306)
+  ✓ Repos: 1, Contributions: 0
+🔍 Screening: Molly Rhodes (@rrhodes2748)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: Rufaida Khan (@ruf99)
+  ✓ Repos: 19, Contributions: 0
+🔍 Screening: Derek X Ye (@derekyeeyee)
+  ✓ Repos: 3, Contributions: 6
+🔍 Screening: RAUHMEL FOX, CEO (@rauhmelfoxceo)
+  ✓ Repos: 5, Contributions: 21
+🔍 Screening: Isha (@Ishas)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: Hugh (@hughiwnl)
+  ✓ Repos: 26, Contributions: 46
+🔍 Screening: Andre Putra Ramadhan (@anplusdre)
+  ✓ Repos: 3, Contributions: 3
+🔍 Screening: Evangeline (@evangelinensy)
+  ✓ Repos: 14, Contributions: 48
+🔍 Screening: Aktan (@tadoophom)
+  ✓ Repos: 25, Contributions: 31
+🔍 Screening: Aleksandar Cridge (@acridge3-369)
+  ✓ Repos: 4, Contributions: 53
+🔍 Screening: Suhaas  (@Suhaas15)
+  ✓ Repos: 44, Contributions: 33
+🔍 Screening: Carlos Cueva (@cuevalabs)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: Varun Pratap Singh (@varunhs96)
+  ✓ Repos: 4, Contributions: 0
+🔍 Screening: HAMZA SARWANI (@hamza03p)
+  ✓ Repos: 2, Contributions: 0
+🔍 Screening: Muhammad Younus Shaik (@muha-29)
+  ✓ Repos: 7, Contributions: 37
+🔍 Screening: Shreshth Behal (@SHRESHTHBEHAL)
+  ✓ Repos: 5, Contributions: 9
+🔍 Screening: Devin Pigera (@dpigera)
+  ✓ Repos: 7, Contributions: 1
+🔍 Screening: Pranav P R (@PRP2003)
+  ✓ Repos: 19, Contributions: 0
+🔍 Screening: Aryaman Gajrani (@arya-gaj)
+  ✓ Repos: 7, Contributions: 98
+🔍 Screening: Anvay Vats (@vats9875)
+  ✗ Error: User not found
+🔍 Screening: Dhanush (@dhanushkenkiri)
+  ✓ Repos: 32, Contributions: 59
+🔍 Screening: Raymond Lee (@NA)
+  ✗ Error: Invalid or missing username
+🔍 Screening: Jaspal Singh Saluja (@jsaluja)
+  ✓ Repos: 24, Contributions: 50
+🔍 Screening: Junfan Zhu (@junfanz1)
+  ✓ Repos: 267, Contributions: 29
+🔍 Screening: Kaushik Sivakumar (@KaushikSiva)
+  ✓ Repos: 18, Contributions: 2
+🔍 Screening: Heidi (@in)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: silly tots (@cheyeehaw)
+  ✓ Repos: 4, Contributions: 0
+🔍 Screening: Vignesh Murugan (@VigneshMurugan)
+  ✓ Repos: 55, Contributions: 0
+🔍 Screening: Allen Kileo (@allenki1eo)
+  ✓ Repos: 10, Contributions: 0
+🔍 Screening: Aaryan Sinha (@sinhaaaryan)
+  ✓ Repos: 16, Contributions: 0
+🔍 Screening: Michael Marsack (@Martech-Studios)
+  ✓ Repos: 1, Contributions: 0
+🔍 Screening: David Croft (@davidcroft15)
+  ✓ Repos: 3, Contributions: 24
+🔍 Screening: dk (@kw0ntum)
+  ✓ Repos: 21, Contributions: 0
+🔍 Screening: Pulkit (@ipulkitg)
+  ✓ Repos: 49, Contributions: 18
+🔍 Screening: Zacian  (@chsxthwik)
+  ✓ Repos: 8, Contributions: 0
+🔍 Screening: Avi Agola (@Phytonking)
+  ✓ Repos: 20, Contributions: 0
+🔍 Screening: Armin Foroughi (@arminforoughi)
+  ✓ Repos: 39, Contributions: 1
+🔍 Screening: Ardan Giordjie (@ardangiordjie)
+  ✓ Repos: 3, Contributions: 11
+🔍 Screening: sam (@beasleydog)
+  ✓ Repos: 53, Contributions: 9
+🔍 Screening: Dominic Borley (@djbdom)
+  ✓ Repos: 0, Contributions: 0
+🔍 Screening: Devansh Ruia (@Devansh-Ruia)
+  ✓ Repos: 9, Contributions: 4
+🔍 Screening: Sid Sannabhadti (@stratsid)
+  ✓ Repos: 2, Contributions: 0
+🔍 Screening: Rainbow // Alan (@Neptunius)
+  ✓ Repos: 35, Contributions: 0
+🔍 Screening: Ian Kim (@NotIan11)
+  ✓ Repos: 4, Contributions: 0
+🔍 Screening: Ulysse Grosjean (@Expertnocode)
+  ✓ Repos: 8, Contributions: 0
+🔍 Screening: Chaitanya Khot (@ckkhot)
+  ✓ Repos: 7, Contributions: 7
+🔍 Screening: Ananta Verma (@Anantaverma20)
+  ✓ Repos: 18, Contributions: 11
+🔍 Screening: Ankit Maloo (@ankitmaloo)
+  ✓ Repos: 32, Contributions: 17
+🔍 Screening: Colin (@colygon)
+  ✓ Repos: 84, Contributions: 62
+🔍 Screening: Megan Hsu (@grasped-dev)
+  ✓ Repos: 12, Contributions: 0
+🔍 Screening: Mohamed Musthafa AK (@Mhdmusthaf)
+  ✓ Repos: 5, Contributions: 3
+🔍 Screening: Fahad (@readysetgit)
+  ✓ Repos: 23, Contributions: 2
+
+============================================================
+✅ Screening Complete!
+   Completed: 145
+   Failed: 6
+   Total: 151
+============================================================
