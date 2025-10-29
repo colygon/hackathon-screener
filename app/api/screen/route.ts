@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GitHubScreener, extractGitHubUsername } from '@/lib/github';
+import { initializeDatabase, insertApplicant } from '@/lib/db';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes for long-running screening
@@ -35,14 +36,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Initialize database
+    await initializeDatabase();
+
     // Extract applicants with GitHub usernames
     const applicants = rows.map(row => ({
       api_id: row.api_id || '',
       name: row.name || '',
       email: row.email || '',
+      phone_number: row.phone_number || '',
       approval_status: row.approval_status || '',
       github_raw: row['What is your GitHub?'] || '',
       github_username: extractGitHubUsername(row['What is your GitHub?'] || ''),
+      linkedin_url: row['What is your LinkedIn profile?'] || '',
       track: row['Which track are you doing?'] || '',
       build_plan: row['What do you plan to build? (you can change it later)'] || '',
     }));
@@ -58,16 +64,21 @@ export async function POST(request: NextRequest) {
     const screener = new GitHubScreener(process.env.GITHUB_TOKEN);
     const githubResults = await screener.batchCheckUsers(uniqueUsernames, 300);
 
-    // Combine results
-    const finalApplicants = applicants.map(applicant => {
+    // Combine results and save to database
+    const finalApplicants = [];
+    
+    for (const applicant of applicants) {
       const githubData = githubResults.get(applicant.github_username) || {};
       
-      return {
+      const result = {
         api_id: applicant.api_id,
         name: applicant.name,
         email: applicant.email,
+        phone_number: applicant.phone_number,
         approval_status: applicant.approval_status,
         github_username: applicant.github_username,
+        github_url: githubData.github_profile_url || '',
+        linkedin_url: applicant.linkedin_url,
         has_opensource_contributions: githubData.has_opensource_contributions || false,
         public_repos: githubData.public_repos || 0,
         forked_repos: githubData.forked_repos || 0,
@@ -76,8 +87,15 @@ export async function POST(request: NextRequest) {
         github_check_error: githubData.github_check_error || '',
         track: applicant.track,
         build_plan: applicant.build_plan,
+        screening_status: githubData.github_check_error ? 'failed' as const : 'completed' as const,
+        screening_error: githubData.github_check_error || '',
       };
-    });
+      
+      // Save to database
+      await insertApplicant(result);
+      
+      finalApplicants.push(result);
+    }
 
     // Calculate summary
     const total = finalApplicants.length;
