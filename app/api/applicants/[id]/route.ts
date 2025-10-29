@@ -5,11 +5,11 @@ export const runtime = 'nodejs';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
-    const id = params.id;
+    const { id } = await params;
     const { approval_status, gender } = body;
 
     if (!approval_status && !gender) {
