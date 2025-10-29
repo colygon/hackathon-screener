@@ -110,9 +110,9 @@ export default function ApplicantsTable({ applicants }: Props) {
     setEditingGender(id);
   };
 
-  const handleEditField = (id: number, field: string, currentValue: string) => {
+  const handleEditField = (id: number, field: string, currentValue: string | number | undefined) => {
     setEditingField({ id, field });
-    setEditValues(prev => ({ ...prev, [`${id}-${field}`]: currentValue || '' }));
+    setEditValues(prev => ({ ...prev, [`${id}-${field}`]: String(currentValue || '') }));
   };
 
   const handleSaveField = (id: number, field: string) => {
@@ -393,7 +393,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     <div className="flex items-center gap-2">
                       <div className="text-sm text-gray-900">{getFieldValue(applicant, 'graduation_year') || 'N/A'}</div>
                       <button
-                        onClick={() => handleEditField(applicant.id, 'graduation_year', applicant.graduation_year)}
+                        onClick={() => handleEditField(applicant.id, 'graduation_year', applicant.graduation_year ?? '')}
                         className="text-xs text-blue-600 hover:text-blue-800"
                       >
                         ✎
@@ -419,7 +419,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     <div className="flex items-center gap-2">
                       <div className="text-sm text-gray-900">{getFieldValue(applicant, 'company') || 'N/A'}</div>
                       <button
-                        onClick={() => handleEditField(applicant.id, 'company', applicant.company)}
+                        onClick={() => handleEditField(applicant.id, 'company', applicant.company ?? '')}
                         className="text-xs text-blue-600 hover:text-blue-800"
                       >
                         ✎
@@ -445,7 +445,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     <div className="flex items-center gap-2">
                       <div className="text-sm text-gray-900 max-w-[150px] truncate">{getFieldValue(applicant, 'job_title') || 'N/A'}</div>
                       <button
-                        onClick={() => handleEditField(applicant.id, 'job_title', applicant.job_title)}
+                        onClick={() => handleEditField(applicant.id, 'job_title', applicant.job_title ?? '')}
                         className="text-xs text-blue-600 hover:text-blue-800"
                       >
                         ✎
