@@ -19,30 +19,38 @@ export async function PATCH(
       );
     }
 
-    // Build dynamic update query
-    let updateFields = [];
-    let values: any[] = [];
+    // Update the applicant
+    let result;
     
-    if (approval_status) {
-      updateFields.push('approval_status = $' + (values.length + 1));
-      values.push(approval_status);
+    if (approval_status && gender) {
+      result = await sql`
+        UPDATE applicants
+        SET 
+          approval_status = ${approval_status},
+          gender = ${gender},
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else if (approval_status) {
+      result = await sql`
+        UPDATE applicants
+        SET 
+          approval_status = ${approval_status},
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else if (gender) {
+      result = await sql`
+        UPDATE applicants
+        SET 
+          gender = ${gender},
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ${id}
+        RETURNING *
+      `;
     }
-    
-    if (gender) {
-      updateFields.push('gender = $' + (values.length + 1));
-      values.push(gender);
-    }
-    
-    values.push(id);
-    const idParam = '$' + values.length;
-
-    const result = await sql.query(
-      `UPDATE applicants
-       SET ${updateFields.join(', ')}, updated_at = CURRENT_TIMESTAMP
-       WHERE id = ${idParam}
-       RETURNING *`,
-      values
-    );
 
     if (result.rows.length === 0) {
       return NextResponse.json(
