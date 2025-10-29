@@ -37,6 +37,8 @@ export default function ApplicantsTable({ applicants }: Props) {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [applicantStatuses, setApplicantStatuses] = useState<Record<number, string>>({});
   const [applicantGenders, setApplicantGenders] = useState<Record<number, string>>({});
+  const [editingField, setEditingField] = useState<{ id: number; field: string } | null>(null);
+  const [editValues, setEditValues] = useState<Record<string, string>>({});
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -64,6 +66,30 @@ export default function ApplicantsTable({ applicants }: Props) {
 
   const handleSetGender = (id: number, gender: string) => {
     setApplicantGenders(prev => ({ ...prev, [id]: gender }));
+  };
+
+  const handleEditField = (id: number, field: string, currentValue: string) => {
+    setEditingField({ id, field });
+    setEditValues(prev => ({ ...prev, [`${id}-${field}`]: currentValue || '' }));
+  };
+
+  const handleSaveField = (id: number, field: string) => {
+    // In a real app, this would save to the database
+    // For now, we'll just close the edit mode
+    setEditingField(null);
+    // Note: The edited value is stored in editValues and will persist in the session
+  };
+
+  const handleCancelEdit = () => {
+    setEditingField(null);
+  };
+
+  const getFieldValue = (applicant: any, field: string) => {
+    const key = `${applicant.id}-${field}`;
+    if (editValues[key] !== undefined) {
+      return editValues[key];
+    }
+    return applicant[field];
   };
 
   const sortedApplicants = [...applicants].sort((a, b) => {
@@ -308,13 +334,82 @@ export default function ApplicantsTable({ applicants }: Props) {
                   <div className="text-sm text-gray-900">{applicant.track || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{applicant.graduation_year || 'N/A'}</div>
+                  {editingField?.id === applicant.id && editingField?.field === 'graduation_year' ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        value={editValues[`${applicant.id}-graduation_year`] || ''}
+                        onChange={(e) => setEditValues(prev => ({ ...prev, [`${applicant.id}-graduation_year`]: e.target.value }))}
+                        className="w-20 px-2 py-1 text-sm border border-gray-300 rounded"
+                        placeholder="Year"
+                        autoFocus
+                      />
+                      <button onClick={() => handleSaveField(applicant.id, 'graduation_year')} className="text-xs text-green-600 hover:text-green-800">✓</button>
+                      <button onClick={handleCancelEdit} className="text-xs text-red-600 hover:text-red-800">✗</button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-gray-900">{getFieldValue(applicant, 'graduation_year') || 'N/A'}</div>
+                      <button
+                        onClick={() => handleEditField(applicant.id, 'graduation_year', applicant.graduation_year)}
+                        className="text-xs text-blue-600 hover:text-blue-800"
+                      >
+                        ✎
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{applicant.company || 'N/A'}</div>
+                  {editingField?.id === applicant.id && editingField?.field === 'company' ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={editValues[`${applicant.id}-company`] || ''}
+                        onChange={(e) => setEditValues(prev => ({ ...prev, [`${applicant.id}-company`]: e.target.value }))}
+                        className="w-32 px-2 py-1 text-sm border border-gray-300 rounded"
+                        placeholder="Company"
+                        autoFocus
+                      />
+                      <button onClick={() => handleSaveField(applicant.id, 'company')} className="text-xs text-green-600 hover:text-green-800">✓</button>
+                      <button onClick={handleCancelEdit} className="text-xs text-red-600 hover:text-red-800">✗</button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-gray-900">{getFieldValue(applicant, 'company') || 'N/A'}</div>
+                      <button
+                        onClick={() => handleEditField(applicant.id, 'company', applicant.company)}
+                        className="text-xs text-blue-600 hover:text-blue-800"
+                      >
+                        ✎
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{applicant.job_title || 'N/A'}</div>
+                  {editingField?.id === applicant.id && editingField?.field === 'job_title' ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={editValues[`${applicant.id}-job_title`] || ''}
+                        onChange={(e) => setEditValues(prev => ({ ...prev, [`${applicant.id}-job_title`]: e.target.value }))}
+                        className="w-32 px-2 py-1 text-sm border border-gray-300 rounded"
+                        placeholder="Title"
+                        autoFocus
+                      />
+                      <button onClick={() => handleSaveField(applicant.id, 'job_title')} className="text-xs text-green-600 hover:text-green-800">✓</button>
+                      <button onClick={handleCancelEdit} className="text-xs text-red-600 hover:text-red-800">✗</button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-gray-900">{getFieldValue(applicant, 'job_title') || 'N/A'}</div>
+                      <button
+                        onClick={() => handleEditField(applicant.id, 'job_title', applicant.job_title)}
+                        className="text-xs text-blue-600 hover:text-blue-800"
+                      >
+                        ✎
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {(() => {
