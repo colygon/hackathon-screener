@@ -29,13 +29,14 @@ interface Props {
   applicants: Applicant[];
 }
 
-type SortField = 'name' | 'email' | 'public_repos' | 'recent_contributions' | 'approval_status';
+type SortField = 'name' | 'email' | 'public_repos' | 'recent_contributions' | 'approval_status' | 'gender' | 'track' | 'company' | 'graduation_year';
 type SortDirection = 'asc' | 'desc';
 
 export default function ApplicantsTable({ applicants }: Props) {
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [applicantStatuses, setApplicantStatuses] = useState<Record<number, string>>({});
+  const [applicantGenders, setApplicantGenders] = useState<Record<number, string>>({});
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -61,6 +62,10 @@ export default function ApplicantsTable({ applicants }: Props) {
     });
   };
 
+  const handleSetGender = (id: number, gender: string) => {
+    setApplicantGenders(prev => ({ ...prev, [id]: gender }));
+  };
+
   const sortedApplicants = [...applicants].sort((a, b) => {
     let aVal: any = a[sortField];
     let bVal: any = b[sortField];
@@ -69,6 +74,12 @@ export default function ApplicantsTable({ applicants }: Props) {
     if (sortField === 'approval_status') {
       aVal = applicantStatuses[a.id] || a.approval_status || 'pending';
       bVal = applicantStatuses[b.id] || b.approval_status || 'pending';
+    }
+
+    // Handle gender from state
+    if (sortField === 'gender') {
+      aVal = applicantGenders[a.id] || a.gender || '';
+      bVal = applicantGenders[b.id] || b.gender || '';
     }
 
     if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
@@ -124,10 +135,16 @@ export default function ApplicantsTable({ applicants }: Props) {
               </div>
             </th>
             <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              GitHub
-            </th>
-            <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               LinkedIn
+            </th>
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('track')}
+            >
+              <div className="flex items-center">
+                Track
+                <SortIcon field="track" />
+              </div>
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
@@ -150,20 +167,44 @@ export default function ApplicantsTable({ applicants }: Props) {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Build Plan
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Track
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('track')}
+            >
+              <div className="flex items-center">
+                Track
+                <SortIcon field="track" />
+              </div>
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Grad Year
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('graduation_year')}
+            >
+              <div className="flex items-center">
+                Grad Year
+                <SortIcon field="graduation_year" />
+              </div>
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Company
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('company')}
+            >
+              <div className="flex items-center">
+                Company
+                <SortIcon field="company" />
+              </div>
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Title
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Gender
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSort('gender')}
+            >
+              <div className="flex items-center">
+                Gender
+                <SortIcon field="gender" />
+              </div>
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
@@ -276,7 +317,29 @@ export default function ApplicantsTable({ applicants }: Props) {
                   <div className="text-sm text-gray-900">{applicant.job_title || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{applicant.gender || 'N/A'}</div>
+                  {(() => {
+                    const currentGender = applicantGenders[applicant.id] || applicant.gender;
+                    if (currentGender === 'Male' || currentGender === 'Female') {
+                      return <div className="text-sm text-gray-900">{currentGender}</div>;
+                    } else {
+                      return (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleSetGender(applicant.id, 'Male')}
+                            className="px-2 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+                          >
+                            M
+                          </button>
+                          <button
+                            onClick={() => handleSetGender(applicant.id, 'Female')}
+                            className="px-2 py-1 text-xs font-medium text-white bg-pink-600 rounded hover:bg-pink-700 transition-colors"
+                          >
+                            F
+                          </button>
+                        </div>
+                      );
+                    }
+                  })()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">{applicant.email}</div>
