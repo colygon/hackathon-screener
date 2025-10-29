@@ -407,7 +407,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <div className="text-sm text-gray-900">{getFieldValue(applicant, 'job_title') || 'N/A'}</div>
+                      <div className="text-sm text-gray-900 max-w-[150px] truncate">{getFieldValue(applicant, 'job_title') || 'N/A'}</div>
                       <button
                         onClick={() => handleEditField(applicant.id, 'job_title', applicant.job_title)}
                         className="text-xs text-blue-600 hover:text-blue-800"
