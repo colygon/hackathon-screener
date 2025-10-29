@@ -27,10 +27,17 @@ async function scrapeLinkedInProfiles() {
   }
 
   console.log('Starting LinkedIn scraping...\n');
-  console.log('⚠️  Note: LinkedIn scraping may have limitations due to bot protection.');
-  console.log('For better results, consider using a service like Proxycurl.\n');
+  
+  const brightDataKey = process.env.BRIGHT_DATA_API_KEY || '0dcf18e7d37e5791aac9413c262f0627c96878ab2a85a57063c70ef7a2bd4526';
+  
+  if (brightDataKey) {
+    console.log('✓ Using Bright Data API for scraping\n');
+  } else {
+    console.log('⚠️  Note: LinkedIn scraping may have limitations due to bot protection.');
+    console.log('For better results, consider using a service like Proxycurl or Bright Data.\n');
+  }
 
-  const scraper = new LinkedInScraper();
+  const scraper = new LinkedInScraper(brightDataKey);
   let completed = 0;
   let failed = 0;
 

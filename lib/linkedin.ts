@@ -5,15 +5,161 @@ interface LinkedInData {
   error?: string;
 }
 
+interface BrightDataResponse {
+  url: string;
+  name?: string;
+  headline?: string;
+  position?: string;
+  company?: string;
+  location?: string;
+  summary?: string;
+  experiences?: Array<{
+    title?: string;
+    company?: string;
+    location?: string;
+    date_range?: string;
+    description?: string;
+    starts_at?: { year?: number; month?: number };
+    ends_at?: { year?: number; month?: number };
+  }>;
+  education?: Array<{
+    school?: string;
+    degree?: string;
+    field_of_study?: string;
+    starts_at?: { year?: number; month?: number };
+    ends_at?: { year?: number; month?: number };
+  }>;
+}
+
 export class LinkedInScraper {
+  private apiKey: string;
+
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey || process.env.BRIGHT_DATA_API_KEY || '';
+  }
   /**
-   * Scrape LinkedIn profile for graduation year, company, and job title
-   * Note: This is a simplified implementation. For production use, consider:
-   * 1. Using a service like Proxycurl, ScraperAPI, or Apify
-   * 2. Implementing proper authentication with LinkedIn's API
-   * 3. Using a headless browser like Puppeteer with proper rate limiting
+   * Scrape LinkedIn profile using Bright Data API
    */
   async scrapeProfile(linkedinUrl: string): Promise<LinkedInData> {
+    if (this.apiKey) {
+      return this.scrapeWithBrightData(linkedinUrl);
+    } else {
+      return this.scrapeBasic(linkedinUrl);
+    }
+  }
+
+  /**
+   * Scrape LinkedIn profile using Bright Data API
+   */
+  private async scrapeWithBrightData(linkedinUrl: string): Promise<LinkedInData> {
+    try {
+      const response = await fetch(
+        'https://api.brightdata.com/datasets/v3/scrape?dataset_id=gd_l1viktl72bvl7bjuj0&notify=false&include_errors=true',
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            input: [{ url: linkedinUrl }],
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        return {
+          graduation_year: null,
+          company: null,
+          job_title: null,
+          error: `HTTP ${response.status}`,
+        };
+      }
+
+      const data = await response.json();
+      
+      // Check if we got a snapshot_id (async response)
+      if (data.snapshot_id) {
+        return {
+          graduation_year: null,
+          company: null,
+          job_title: null,
+          error: 'Async response - snapshot_id returned (not yet supported)',
+        };
+      }
+      
+      // Handle direct profile response
+      let profile: any;
+      if (Array.isArray(data)) {
+        profile = data[0];
+      } else if (data.id || data.name) {
+        // Direct profile object
+        profile = data;
+      } else {
+        return {
+          graduation_year: null,
+          company: null,
+          job_title: null,
+          error: 'Unexpected response format',
+        };
+      }
+      
+      if (!profile) {
+        return {
+          graduation_year: null,
+          company: null,
+          job_title: null,
+          error: 'No profile data',
+        };
+      }
+      
+      // Extract current position
+      let jobTitle = null;
+      let company = null;
+      
+      if (profile.current_company) {
+        jobTitle = profile.current_company.title;
+        company = profile.current_company.name;
+      } else if (profile.experience && profile.experience.length > 0) {
+        const currentJob = profile.experience[0];
+        jobTitle = currentJob.title;
+        company = currentJob.company;
+      } else if (profile.position) {
+        jobTitle = profile.position;
+      }
+      
+      // Extract graduation year (most recent education end year)
+      let graduationYear: number | null = null;
+      if (profile.education && profile.education.length > 0) {
+        for (const edu of profile.education) {
+          // Try different date field formats
+          const endYear = edu.ends_at?.year || edu.end_date?.year || edu.date_range_end?.year;
+          if (endYear && (!graduationYear || endYear > graduationYear)) {
+            graduationYear = endYear;
+          }
+        }
+      }
+
+      return {
+        graduation_year: graduationYear,
+        company: company,
+        job_title: jobTitle,
+      };
+    } catch (error: any) {
+      console.error('Bright Data scrape error:', error.message);
+      return {
+        graduation_year: null,
+        company: null,
+        job_title: null,
+        error: error.message,
+      };
+    }
+  }
+
+  /**
+   * Fallback: Basic scraping (will likely fail due to LinkedIn protection)
+   */
+  private async scrapeBasic(linkedinUrl: string): Promise<LinkedInData> {
     try {
       // Extract username from LinkedIn URL
       const username = this.extractUsername(linkedinUrl);
