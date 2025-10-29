@@ -111,14 +111,11 @@ export default function ApplicantsTable({ applicants }: Props) {
                 <SortIcon field="approval_status" />
               </div>
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               GitHub
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               LinkedIn
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Track
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
@@ -141,14 +138,8 @@ export default function ApplicantsTable({ applicants }: Props) {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Build Plan
             </th>
-            <th 
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSort('name')}
-            >
-              <div className="flex items-center">
-                Name
-                <SortIcon field="name" />
-              </div>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Track
             </th>
             <th 
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
@@ -194,7 +185,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-4 whitespace-nowrap">
                   {applicant.github_username ? (
                     <a
                       href={applicant.github_url}
@@ -209,7 +200,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                     <span className="text-sm text-gray-400">N/A</span>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-4 whitespace-nowrap">
                   {applicant.linkedin_url ? (
                     <a
                       href={applicant.linkedin_url.startsWith('http') ? applicant.linkedin_url : `https://linkedin.com${applicant.linkedin_url}`}
@@ -223,9 +214,6 @@ export default function ApplicantsTable({ applicants }: Props) {
                   ) : (
                     <span className="text-sm text-gray-400">N/A</span>
                   )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{applicant.track || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{applicant.public_repos}</div>
@@ -244,7 +232,7 @@ export default function ApplicantsTable({ applicants }: Props) {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{applicant.name}</div>
+                  <div className="text-sm text-gray-900">{applicant.track || 'N/A'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">{applicant.email}</div>
