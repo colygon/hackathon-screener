@@ -49,20 +49,47 @@ export default function ApplicantsTable({ applicants }: Props) {
     }
   };
 
-  const handleApprove = (id: number) => {
+  const handleApprove = async (id: number) => {
     setApplicantStatuses(prev => ({ ...prev, [id]: 'approved' }));
+    try {
+      await fetch(`/api/applicants/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approval_status: 'approved' }),
+      });
+    } catch (error) {
+      console.error('Failed to update approval status:', error);
+    }
   };
 
-  const handleReject = (id: number) => {
+  const handleReject = async (id: number) => {
     setApplicantStatuses(prev => ({ ...prev, [id]: 'rejected' }));
+    try {
+      await fetch(`/api/applicants/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approval_status: 'rejected' }),
+      });
+    } catch (error) {
+      console.error('Failed to update approval status:', error);
+    }
   };
 
-  const handleUndo = (id: number) => {
+  const handleUndo = async (id: number) => {
     setApplicantStatuses(prev => {
       const newStatuses = { ...prev };
       delete newStatuses[id];
       return newStatuses;
     });
+    try {
+      await fetch(`/api/applicants/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approval_status: 'pending' }),
+      });
+    } catch (error) {
+      console.error('Failed to update approval status:', error);
+    }
   };
 
   const handleSetGender = (id: number, gender: string) => {
