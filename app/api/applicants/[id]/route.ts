@@ -19,38 +19,47 @@ export async function PATCH(
       );
     }
 
-    // Update the applicant
-    let result;
+    // Build update fields dynamically
+    const updates: string[] = [];
+    const values: any[] = [];
     
-    if (approval_status && gender) {
-      result = await sql`
-        UPDATE applicants
-        SET 
-          approval_status = ${approval_status},
-          gender = ${gender},
-          updated_at = CURRENT_TIMESTAMP
-        WHERE id = ${id}
-        RETURNING *
-      `;
-    } else if (approval_status) {
-      result = await sql`
-        UPDATE applicants
-        SET 
-          approval_status = ${approval_status},
-          updated_at = CURRENT_TIMESTAMP
-        WHERE id = ${id}
-        RETURNING *
-      `;
-    } else if (gender) {
-      result = await sql`
-        UPDATE applicants
-        SET 
-          gender = ${gender},
-          updated_at = CURRENT_TIMESTAMP
-        WHERE id = ${id}
-        RETURNING *
-      `;
+    if (approval_status) {
+      updates.push('approval_status');
+      values.push(approval_status);
     }
+    if (gender) {
+      updates.push('gender');
+      values.push(gender);
+    }
+
+    // Update the applicant
+    const result = approval_status && gender
+      ? await sql`
+          UPDATE applicants
+          SET 
+            approval_status = ${approval_status},
+            gender = ${gender},
+            updated_at = CURRENT_TIMESTAMP
+          WHERE id = ${id}
+          RETURNING *
+        `
+      : approval_status
+      ? await sql`
+          UPDATE applicants
+          SET 
+            approval_status = ${approval_status},
+            updated_at = CURRENT_TIMESTAMP
+          WHERE id = ${id}
+          RETURNING *
+        `
+      : await sql`
+          UPDATE applicants
+          SET 
+            gender = ${gender},
+            updated_at = CURRENT_TIMESTAMP
+          WHERE id = ${id}
+          RETURNING *
+        `;
 
     if (result.rows.length === 0) {
       return NextResponse.json(

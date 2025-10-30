@@ -82,12 +82,6 @@ export async function insertApplicant(applicant: Partial<Applicant>) {
         github_username = EXCLUDED.github_username,
         github_url = EXCLUDED.github_url,
         linkedin_url = EXCLUDED.linkedin_url,
-        has_opensource_contributions = EXCLUDED.has_opensource_contributions,
-        public_repos = EXCLUDED.public_repos,
-        forked_repos = EXCLUDED.forked_repos,
-        recent_contributions = EXCLUDED.recent_contributions,
-        screening_status = EXCLUDED.screening_status,
-        screening_error = EXCLUDED.screening_error,
         updated_at = CURRENT_TIMESTAMP
       RETURNING *
     `;
