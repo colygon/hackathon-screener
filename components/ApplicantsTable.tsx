@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ExternalLink, Check, X, Clock, ChevronUp, ChevronDown, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ExternalLink, Check, X, Clock, ChevronUp, ChevronDown, ThumbsUp, ThumbsDown, Download, Filter } from 'lucide-react';
 
 interface Applicant {
   id: number;
@@ -31,6 +31,7 @@ interface Props {
 
 type SortField = 'name' | 'email' | 'public_repos' | 'recent_contributions' | 'approval_status' | 'gender' | 'track' | 'company' | 'graduation_year';
 type SortDirection = 'asc' | 'desc';
+type GenderFilter = 'All' | 'Male' | 'Female' | 'Non-binary/Unknown';
 
 export default function ApplicantsTable({ applicants }: Props) {
   const [sortField, setSortField] = useState<SortField>('name');
@@ -40,6 +41,7 @@ export default function ApplicantsTable({ applicants }: Props) {
   const [editingField, setEditingField] = useState<{ id: number; field: string } | null>(null);
   const [editValues, setEditValues] = useState<Record<string, string>>({});
   const [editingGender, setEditingGender] = useState<number | null>(null);
+  const [genderFilter, setGenderFilter] = useState<GenderFilter>('All');
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -134,7 +136,39 @@ export default function ApplicantsTable({ applicants }: Props) {
     return applicant[field];
   };
 
-  const sortedApplicants = [...applicants].sort((a, b) => {
+  const downloadEmailsCSV = () => {
+    // Get filtered applicants
+    const applicantsToExport = genderFilter === 'All' 
+      ? sortedApplicants 
+      : sortedApplicants.filter(applicant => {
+          const currentGender = applicantGenders[applicant.id] || applicant.gender || 'Non-binary/Unknown';
+          return currentGender === genderFilter;
+        });
+    
+    // Create CSV content
+    const csvContent = 'email\n' + applicantsToExport.map(a => a.email).join('\n');
+    
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `emails-${genderFilter.toLowerCase()}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Apply gender filter
+  const filteredApplicants = genderFilter === 'All' 
+    ? applicants 
+    : applicants.filter(applicant => {
+        const currentGender = applicantGenders[applicant.id] || applicant.gender || 'Non-binary/Unknown';
+        return currentGender === genderFilter;
+      });
+
+  const sortedApplicants = [...filteredApplicants].sort((a, b) => {
     let aVal: any = a[sortField];
     let bVal: any = b[sortField];
 
@@ -189,7 +223,42 @@ export default function ApplicantsTable({ applicants }: Props) {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div>
+      {/* Filter and Download Controls */}
+      <div className="mb-4 flex items-center gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-gray-500" />
+          <span className="text-sm font-medium text-gray-700">Filter by Gender:</span>
+          <div className="flex gap-2">
+            {(['All', 'Male', 'Female', 'Non-binary/Unknown'] as GenderFilter[]).map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setGenderFilter(filter)}
+                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+                  genderFilter === filter
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+          <span className="ml-2 px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
+            {sortedApplicants.length} {sortedApplicants.length === 1 ? 'applicant' : 'applicants'}
+          </span>
+        </div>
+        
+        <button
+          onClick={downloadEmailsCSV}
+          className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+        >
+          <Download className="w-4 h-4" />
+          Download Emails CSV
+        </button>
+      </div>
+
+      <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -481,6 +550,7 @@ export default function ApplicantsTable({ applicants }: Props) {
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
